@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/style.css">
+    <title>Decodificador</title>
+</head>
+<body>
+    <header></header>
+    <main class="apresentacao">
+        <img class="apresentacao__logo" src="./assets/Logo.svg" alt="Imagem de nossa Logo">
+        <div class="apresentacao__entrada__dados">
+            <input type="text" id="text_mensagem_para_criptografarDescriptografar" name="mensagem_para_criptografarDescriptografar" placeholder="Digite seu texto" required pattern="[a-z]"/>
+            <div>
+                <div class="apresentacao__entrada__dados__observacao">
+                    <img src="./assets/bi_exclamation-circle-fill.svg" alt="Imagem de um circulo com exclamacao" id="imagemProdutoQualidade">
+                    <p class="apresentacao__entrada__dados__observacao">Apenas letras minúsculas e sem acento.</p>
+                </div>
+                <div class="apresentacao__entrada__dados_botoes">
+                    <button class="btn1" onclick="criptografar()">Criptografar</button>   
+                    <button class="btn2" onclick="descriptografar()">Descriptografar</button>
+                </div>
+            </div>
+        </div>
+        <div class="apresentacao__mensagem__saida">
+            <div id="apresentacao__mensagemSemCriptografiaDescriptografia">
+                <img src="./assets/High quality products 1 1.svg" alt="Imagem de produto de alta qualidade" id="imagemProdutoQualidade">
+                <div >
+                    <p class="msg1">Nenhuma mensagem encontrada</p>
+                    <p class="msg2">Digite um texto que você deseja criptografar ou descriptografar.</p>
+                </div>
+            </div>
+            <div id="apresentacao__mensagemComCriptografiaDescriptografia" display="none">
+                <textarea id="mensagemCriptogradaDescriptografada" name="textarea_mensagemCriptogradaDescriptografada" rows="10" cols="40"></textarea>
+                <button class="btn2" onclick="copiar()">Copiar</button>
+            </div>
+        </div>
+    </main>
+    <footer class="rodape">Desenvolvido por Alessandro Mota.</footer>
+    <script>
+        function criptografar() {
+            let input = document.getElementById("text_mensagem_para_criptografarDescriptografar");
+            let texto_inserido = input.value;
+            console.log(texto_inserido);
+            remove_apresentacao_inicial();
+            converte_texto(texto_inserido,0);
+            limpa_mensagem_para_criptografarDescriptografar();
+        }
+
+        /*  funcao para criptografar e descriptografar
+            use tipo = 0 significa que vamos criptografar
+            use tipo <> 0 significa que vamos descriptografar  */
+        function converte_texto (texto, tipo){
+            let texto_resultado = "";
+            if (tipo == 0){
+                for (let i = 0; i < texto.length; i++) {
+                    if (texto[i] == 'a'){
+                        texto_resultado += "ai"; 
+                    } 
+                    else if (texto[i] == 'e'){
+                        texto_resultado += "enter"; 
+                    } 
+                    else if (texto[i] == 'i'){
+                    texto_resultado += "imes"; 
+                    } 
+                    else if (texto[i] == 'o'){
+                        texto_resultado += "ober"; 
+                    } 
+                    else if (texto[i] == 'u'){
+                        texto_resultado += "ufat"; 
+                    } 
+                    else {
+                        texto_resultado += texto[i]; 
+                    }
+                }
+            }
+            else {
+                texto_resultado = texto;
+                texto_resultado = texto_resultado.replaceAll("ai","a");
+                texto_resultado = texto_resultado.replaceAll("enter","e");
+                texto_resultado = texto_resultado.replaceAll("imes","i");
+                texto_resultado = texto_resultado.replaceAll("ober","o");
+                texto_resultado = texto_resultado.replaceAll("ufat","u");
+                console.log(texto_resultado);
+            }
+            document.getElementById("mensagemCriptogradaDescriptografada").value=texto_resultado;
+        }
+         
+        function descriptografar() {
+            let input = document.getElementById("text_mensagem_para_criptografarDescriptografar");
+            let texto_inserido = input.value;
+            console.log(texto_inserido);
+            remove_apresentacao_inicial();
+            converte_texto(texto_inserido,1);
+            limpa_mensagem_para_criptografarDescriptografar();
+        }
+        
+        function copiar() {
+            let input = document.getElementById("mensagemCriptogradaDescriptografada");
+            let texto_inserido = input.value;
+            console.log(texto_inserido);
+            // falta executar o comando de ctrl+v aqui
+            copia_mensagem_criptografadaDescriptografada();
+        }
+
+        function exibe_apresentacao_inicial() {
+            document.getElementById("apresentacao__mensagemSemCriptografiaDescriptografia").style.display = "block";
+        }
+
+        function remove_apresentacao_inicial() {
+            document.getElementById("apresentacao__mensagemSemCriptografiaDescriptografia").style.display = "none";
+        }
+
+        function limpa_mensagem_para_criptografarDescriptografar() {
+            document.getElementById("text_mensagem_para_criptografarDescriptografar").value="";
+        }
+
+        function copia_mensagem_criptografadaDescriptografada() {
+            document.getElementById("mensagemCriptogradaDescriptografada").value="Nenhuma mensagem";
+        }
+    </script>
+</body>
+</html>
